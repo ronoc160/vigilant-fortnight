@@ -2,6 +2,8 @@
 
 A React + TypeScript application for visualizing financial portfolio data with interactive charts and responsive design.
 
+**Live Demo**: https://ronoc160-vigilant-fortnight.vercel.app/login
+
 ## Features
 
 - **Authentication**: Simple login system with local storage persistence

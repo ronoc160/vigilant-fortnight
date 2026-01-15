@@ -70,7 +70,16 @@ export function useHistoricalData({
       const fromDate = getDateFromPeriod(period);
       const toDate = new Date().toISOString().split('T')[0];
 
-      const prices = await apiClient.getPrices({ from: fromDate, to: toDate });
+      const assetNames = assets
+        .filter(a => positionQuantities.has(a.id))
+        .map(a => a.name)
+        .join(',');
+
+      const prices = await apiClient.getPrices({
+        from: fromDate,
+        to: toDate,
+        assets: assetNames
+      });
 
       const pricesByDate = new Map<string, Map<string, number>>();
       prices.forEach((price) => {

@@ -34,13 +34,16 @@ class ApiClient {
 
   async getPrices(params?: {
     asset?: string;
+    assets?: string;
     asOf?: string;
     from?: string;
     to?: string;
   }): Promise<Price[]> {
     const searchParams = new URLSearchParams();
 
-    if (params?.asset) {
+    if (params?.assets) {
+      searchParams.set('assets', params.assets);
+    } else if (params?.asset) {
       searchParams.set('asset', params.asset);
     }
     if (params?.asOf) {
