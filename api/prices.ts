@@ -15,13 +15,26 @@ const basePrices: Record<string, number> = {
 
 const assetNames = ['AAPL', 'GOOGL', 'MSFT', 'TSLA', 'BTC', 'ETH', 'SOL', 'USD', 'GBP', 'EUR'];
 
+function seededRandom(seed: number): number {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
 function generatePricesForDate(date: string) {
-  return assetNames.map((name, index) => ({
-    id: `price-${name}-${date}`,
-    asset: name,
-    price: basePrices[name],
-    asOf: date,
-  }));
+  const dateNum = new Date(date).getTime();
+
+  return assetNames.map((name, index) => {
+    const seed = dateNum + index * 1000;
+    const variation = (seededRandom(seed) - 0.5) * 0.2;
+    const price = basePrices[name] * (1 + variation);
+
+    return {
+      id: `price-${name}-${date}`,
+      asset: name,
+      price: Math.round(price * 100) / 100,
+      asOf: date,
+    };
+  });
 }
 
 function generatePricesInRange(from: string, to: string) {
